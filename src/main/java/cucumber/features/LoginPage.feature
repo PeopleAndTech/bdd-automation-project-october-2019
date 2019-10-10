@@ -6,5 +6,6 @@ Feature: Login Page field validation
     Then I validate email or phone field is displayed
     Then I validate password field is displayed
     Then I validate Login button is displayed
+    Then I quit the browser
 
 
