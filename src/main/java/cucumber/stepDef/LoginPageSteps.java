@@ -1,17 +1,20 @@
 package cucumber.stepDef;
 
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
+import pages.ErrorLoginPage;
 import pages.LoginPage;
 
 public class LoginPageSteps {
     public static WebDriver driver;
     LoginPage loginPage;
+    ErrorLoginPage errorLoginPage;
 
     @Given("^I open the browser and navigate to facebook login page$")
     public void i_open_the_browser_and_navigate_to_facebook_login_page() {
@@ -32,21 +35,39 @@ public class LoginPageSteps {
         loginPage.emailIsDisplayed();
     }
 
-    @Then("^I validate password field is displayed$")
+    @And("^I validate password field is displayed$")
     public void i_validate_password_field_is_displayed() {
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        loginPage.passwordIsDisplayed();
     }
 
-    @Then("^I validate Login button is displayed$")
+    @And("^I validate Login button is displayed$")
     public void i_validate_Login_button_is_displayed() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        loginPage.loginIsDisplayed();
     }
 
-    @Then("^I quit the browser$")
+    @And("^I quit the browser$")
     public void i_quit_the_browser() {
         driver.quit();
     }
+
+    @Then("^I write (.*) and (.*)$")
+    public void i_write_user_and_pass(String user, String pass) {
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        loginPage.fillUserNamePasswordField(user, pass);
+    }
+
+    @Then("^I click on login button$")
+    public void i_click_on_login_button() {
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        loginPage.clickOnLoginButton();
+    }
+
+    @Then("^I validate user logged in$")
+    public void i_validate_user_logged_in() {
+        errorLoginPage = PageFactory.initElements(driver, ErrorLoginPage.class);
+        errorLoginPage.validateAlertIsDisplayed();
+    }
+
 }
