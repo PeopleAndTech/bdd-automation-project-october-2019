@@ -20,3 +20,11 @@ Feature: Login Page field validation
     And I validate password field is displayed
     And I validate Login button is displayed
     And I quit the browser
+
+  Scenario: UI validation for login
+    Given User opens the browser and navigate to facebook login page
+    When User lands on facebook homepage validates login page is displayed
+    Then User validates email or phone field is displayed
+    And User validates password field is displayed
+    And User validates Login button is displayed
+    And User quits the browser
